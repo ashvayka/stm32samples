@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include "diag/Trace.h"
 
-#include "Timer.h"
 #include "BlinkLed.h"
 #include "stm32f429i_discovery_lcd.h"
 
@@ -37,9 +36,7 @@
 
 // ----- Timing definitions -------------------------------------------------
 
-// Keep the LED on for 2/3 of a second.
-#define BLINK_ON_TICKS  (TIMER_FREQUENCY_HZ * 2 / 3)
-#define BLINK_OFF_TICKS (TIMER_FREQUENCY_HZ - BLINK_ON_TICKS)
+#define TIMER_FREQUENCY_HZ (1000u)
 
 // ----- main() ---------------------------------------------------------------
 
@@ -52,118 +49,107 @@
 
 static void SystemClock_Config(void);
 
-int
-main(int argc, char* argv[])
-{
-  // By customising __initialize_args() it is possible to pass arguments,
-  // for example when running tests with semihosting you can pass various
-  // options to the test.
-  // trace_dump_args(argc, argv);
+int main(int argc, char* argv[]) {
+	// Send a greeting to the trace device (skipped on Release).
+	trace_puts("Hello ARM World!");
 
-  // Send a greeting to the trace device (skipped on Release).
-  trace_puts("Hello ARM World!");
+	// The standard output and the standard error should be forwarded to
+	// the trace device. For this to work, a redirection in _write.c is
+	// required.
+	puts("Standard output message.");
+//	fprintf(stderr, "Standard error message.\n");
 
-  // The standard output and the standard error should be forwarded to
-  // the trace device. For this to work, a redirection in _write.c is
-  // required.
-  puts("Standard output message.");
-  fprintf(stderr, "Standard error message.\n");
+	HAL_Init();
+	SystemClock_Config();
 
-  HAL_Init();
-  SystemClock_Config();
+	// At this stage the system clock should have already been configured
+	// at high speed.
+	trace_printf("System clock: %uHz\n", SystemCoreClock);
 
-  // At this stage the system clock should have already been configured
-  // at high speed.
-  trace_printf("System clock: %uHz\n", SystemCoreClock);
+	// Use SysTick as reference for the delay loops.
+	SysTick_Config(SystemCoreClock / TIMER_FREQUENCY_HZ);
 
-  timer_start();
+	BSP_LCD_Init();
+	trace_puts("LCD Init success!!!");
+	BSP_LCD_LayerDefaultInit(0, (uint32_t) LCD_FRAME_BUFFER);
+	BSP_LCD_SetLayerVisible(0, ENABLE);
+	BSP_LCD_SelectLayer(0);
+	BSP_LCD_Clear(LCD_COLOR_RED);
+	trace_puts("LCD clear");
+	BSP_LCD_DisplayOn();
+	BSP_LCD_SetBackColor(LCD_COLOR_RED);
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_DisplayStringAtLine(3, (uint8_t *) "Hello world!!!");
 
-  BSP_LCD_Init();
-  trace_puts("LCD Init success!!!");
-  BSP_LCD_LayerDefaultInit(0, (uint32_t) LCD_FRAME_BUFFER);
-  BSP_LCD_SetLayerVisible(0, ENABLE);
-  BSP_LCD_SelectLayer(0);
-  BSP_LCD_Clear(LCD_COLOR_RED);
-  trace_puts("LCD clear");
-  BSP_LCD_DisplayOn();
-  BSP_LCD_SetBackColor(LCD_COLOR_RED);
-  BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-  BSP_LCD_DisplayStringAtLine(3, (uint8_t *) "Hello world!!!");
+	//blink_led_init();
 
-  //blink_led_init();
-
-  uint32_t seconds = 0;
-  // Infinite loop
-  while (1)
-    {
-//      blink_led_on();
-//      timer_sleep(BLINK_ON_TICKS);
-//
-//      blink_led_off();
-//      timer_sleep(BLINK_OFF_TICKS);
-
-      ++seconds;
-
-      // Count seconds on the trace device.
-      trace_printf("Second %u\n", seconds);
-    }
-  // Infinite loop, never return.
+	uint32_t seconds = 0;
+	// Infinite loop
+	while (1) {
+		++seconds;
+		// Count seconds on the trace device.
+		trace_printf("Second %u\n", seconds);
+	}
+	// Infinite loop, never return.
 }
 
 /**
-  * @brief  System Clock Configuration
-  *         The system Clock is configured as follow :
-  *            System Clock source            = PLL (HSE)
-  *            SYSCLK(Hz)                     = 168000000
-  *            HCLK(Hz)                       = 168000000
-  *            AHB Prescaler                  = 1
-  *            APB1 Prescaler                 = 4
-  *            APB2 Prescaler                 = 2
-  *            HSE Frequency(Hz)              = 8000000
-  *            PLL_M                          = 8
-  *            PLL_N                          = 336
-  *            PLL_P                          = 2
-  *            PLL_Q                          = 7
-  *            VDD(V)                         = 3.3
-  *            Main regulator output voltage  = Scale1 mode
-  *            Flash Latency(WS)              = 5
-  * @param  None
-  * @retval None
-  */
-static void SystemClock_Config(void)
-{
-  RCC_ClkInitTypeDef RCC_ClkInitStruct;
-  RCC_OscInitTypeDef RCC_OscInitStruct;
+ * @brief  System Clock Configuration
+ *         The system Clock is configured as follow :
+ *            System Clock source            = PLL (HSE)
+ *            SYSCLK(Hz)                     = 168000000
+ *            HCLK(Hz)                       = 168000000
+ *            AHB Prescaler                  = 1
+ *            APB1 Prescaler                 = 4
+ *            APB2 Prescaler                 = 2
+ *            HSE Frequency(Hz)              = 8000000
+ *            PLL_M                          = 8
+ *            PLL_N                          = 336
+ *            PLL_P                          = 2
+ *            PLL_Q                          = 7
+ *            VDD(V)                         = 3.3
+ *            Main regulator output voltage  = Scale1 mode
+ *            Flash Latency(WS)              = 5
+ * @param  None
+ * @retval None
+ */
+static void SystemClock_Config(void) {
+	RCC_ClkInitTypeDef RCC_ClkInitStruct;
+	RCC_OscInitTypeDef RCC_OscInitStruct;
 
-  /* Enable Power Control clock */
-  __HAL_RCC_PWR_CLK_ENABLE();
+	/* Enable Power Control clock */
+	__HAL_RCC_PWR_CLK_ENABLE();
 
-  /* The voltage scaling allows optimizing the power consumption when the device is
-     clocked below the maximum system frequency, to update the voltage scaling value
-     regarding system frequency refer to product datasheet.  */
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+	/* The voltage scaling allows optimizing the power consumption when the device is
+	 clocked below the maximum system frequency, to update the voltage scaling value
+	 regarding system frequency refer to product datasheet.  */
+	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
-  /* Enable HSE Oscillator and activate PLL with HSE as source */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 8;
-  RCC_OscInitStruct.PLL.PLLN = 336;
-  RCC_OscInitStruct.PLL.PLLP = 2;
-  RCC_OscInitStruct.PLL.PLLQ = 7;
-  HAL_RCC_OscConfig(&RCC_OscInitStruct);
+	/* Enable HSE Oscillator and activate PLL with HSE as source */
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+	RCC_OscInitStruct.PLL.PLLM = 8;
+	RCC_OscInitStruct.PLL.PLLN = 336;
+	RCC_OscInitStruct.PLL.PLLP = 2;
+	RCC_OscInitStruct.PLL.PLLQ = 7;
+	HAL_RCC_OscConfig(&RCC_OscInitStruct);
 
-  /* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
-     clocks dividers */
-  RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
-  HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5);
+	/* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2
+	 clocks dividers */
+	RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK
+			| RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
+	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
+	HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5);
 }
 
+void SysTick_Handler(void) {
+	HAL_IncTick();
+}
 
 #pragma GCC diagnostic pop
 

@@ -5,8 +5,6 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../src/BlinkLed.c \
-../src/Timer.c \
-../src/_initialize_hardware.c \
 ../src/_write.c \
 ../src/main.c \
 ../src/stm32f429i_discovery.c \
@@ -19,8 +17,6 @@ C_SRCS += \
 
 OBJS += \
 ./src/BlinkLed.o \
-./src/Timer.o \
-./src/_initialize_hardware.o \
 ./src/_write.o \
 ./src/main.o \
 ./src/stm32f429i_discovery.o \
@@ -33,8 +29,6 @@ OBJS += \
 
 C_DEPS += \
 ./src/BlinkLed.d \
-./src/Timer.d \
-./src/_initialize_hardware.d \
 ./src/_write.d \
 ./src/main.d \
 ./src/stm32f429i_discovery.d \

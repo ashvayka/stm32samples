@@ -23,7 +23,7 @@ blink_led_init()
   HAL_GPIO_Init(GPIOG, &GPIO_InitStructure);
 
 
-  // Start with led turned on
+//   Start with led turned on
 //  HAL_GPIO_WritePin(GPIOG, GREEN_LED, GPIO_PIN_SET);
   HAL_GPIO_WritePin(GPIOG, RED_LED, GPIO_PIN_SET);
 }

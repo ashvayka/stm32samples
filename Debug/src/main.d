@@ -1,6 +1,5 @@
 src/main.o: ../src/main.c ../system/include/diag/Trace.h \
- ../include/Timer.h ../system/include/cmsis/cmsis_device.h \
- ../system/include/cmsis/stm32f4xx.h \
+ ../include/BlinkLed.h ../system/include/cmsis/stm32f4xx.h \
  ../system/include/cmsis/stm32f429xx.h ../system/include/cmsis/core_cm4.h \
  ../system/include/cmsis/core_cmInstr.h \
  ../system/include/cmsis/core_cmFunc.h \
@@ -10,7 +9,6 @@ src/main.o: ../src/main.c ../system/include/diag/Trace.h \
  ../include/stm32f4xx_hal_conf.h \
  ../system/include/stm32f4-hal/stm32f4xx_hal_rcc.h \
  ../system/include/stm32f4-hal/stm32f4xx_hal_def.h \
- ../system/include/cmsis/stm32f4xx.h \
  ../system/include/stm32f4-hal/Legacy/stm32_hal_legacy.h \
  ../system/include/stm32f4-hal/stm32f4xx_hal_rcc_ex.h \
  ../system/include/stm32f4-hal/stm32f4xx_hal_gpio.h \
@@ -63,7 +61,7 @@ src/main.o: ../src/main.c ../system/include/diag/Trace.h \
  ../system/include/stm32f4-hal/stm32f4xx_hal_pcd.h \
  ../system/include/stm32f4-hal/stm32f4xx_ll_usb.h \
  ../system/include/stm32f4-hal/stm32f4xx_hal_pcd_ex.h \
- ../system/include/stm32f4-hal/stm32f4xx_hal_hcd.h ../include/BlinkLed.h \
+ ../system/include/stm32f4-hal/stm32f4xx_hal_hcd.h \
  ../include/stm32f429i_discovery_lcd.h ../include/stm32f429i_discovery.h \
  ../include/stm32f429i_discovery_sdram.h \
  ../system/include/../../Fonts/fonts.h \
@@ -72,9 +70,7 @@ src/main.o: ../src/main.c ../system/include/diag/Trace.h \
 
 ../system/include/diag/Trace.h:
 
-../include/Timer.h:
-
-../system/include/cmsis/cmsis_device.h:
+../include/BlinkLed.h:
 
 ../system/include/cmsis/stm32f4xx.h:
 
@@ -97,8 +93,6 @@ src/main.o: ../src/main.c ../system/include/diag/Trace.h \
 ../system/include/stm32f4-hal/stm32f4xx_hal_rcc.h:
 
 ../system/include/stm32f4-hal/stm32f4xx_hal_def.h:
-
-../system/include/cmsis/stm32f4xx.h:
 
 ../system/include/stm32f4-hal/Legacy/stm32_hal_legacy.h:
 
@@ -205,8 +199,6 @@ src/main.o: ../src/main.c ../system/include/diag/Trace.h \
 ../system/include/stm32f4-hal/stm32f4xx_hal_pcd_ex.h:
 
 ../system/include/stm32f4-hal/stm32f4xx_hal_hcd.h:
-
-../include/BlinkLed.h:
 
 ../include/stm32f429i_discovery_lcd.h:
 
