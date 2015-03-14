@@ -1,5 +1,5 @@
-src/main.o: ../src/main.c ../system/include/diag/Trace.h \
- ../include/BlinkLed.h ../system/include/cmsis/stm32f4xx.h \
+src/esp8266_uart.o: ../src/esp8266_uart.c ../include/esp8266_uart.h \
+ ../system/include/cmsis/stm32f4xx.h \
  ../system/include/cmsis/stm32f429xx.h ../system/include/cmsis/core_cm4.h \
  ../system/include/cmsis/core_cmInstr.h \
  ../system/include/cmsis/core_cmFunc.h \
@@ -62,16 +62,9 @@ src/main.o: ../src/main.c ../system/include/diag/Trace.h \
  ../system/include/stm32f4-hal/stm32f4xx_ll_usb.h \
  ../system/include/stm32f4-hal/stm32f4xx_hal_pcd_ex.h \
  ../system/include/stm32f4-hal/stm32f4xx_hal_hcd.h \
- ../include/esp8266_uart.h ../include/stm32f429i_discovery.h \
- ../include/stm32f429i_discovery_lcd.h \
- ../include/stm32f429i_discovery_sdram.h \
- ../system/include/../../Fonts/fonts.h \
- ../include/../Components/ili9341/ili9341.h \
- ../include/../Components/ili9341/../Common/lcd.h
+ ../include/stm32f429i_discovery.h
 
-../system/include/diag/Trace.h:
-
-../include/BlinkLed.h:
+../include/esp8266_uart.h:
 
 ../system/include/cmsis/stm32f4xx.h:
 
@@ -201,16 +194,4 @@ src/main.o: ../src/main.c ../system/include/diag/Trace.h \
 
 ../system/include/stm32f4-hal/stm32f4xx_hal_hcd.h:
 
-../include/esp8266_uart.h:
-
 ../include/stm32f429i_discovery.h:
-
-../include/stm32f429i_discovery_lcd.h:
-
-../include/stm32f429i_discovery_sdram.h:
-
-../system/include/../../Fonts/fonts.h:
-
-../include/../Components/ili9341/ili9341.h:
-
-../include/../Components/ili9341/../Common/lcd.h:

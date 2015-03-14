@@ -6,6 +6,7 @@
 C_SRCS += \
 ../src/BlinkLed.c \
 ../src/_write.c \
+../src/esp8266_uart.c \
 ../src/main.c \
 ../src/stm32f429i_discovery.c \
 ../src/stm32f429i_discovery_eeprom.c \
@@ -18,6 +19,7 @@ C_SRCS += \
 OBJS += \
 ./src/BlinkLed.o \
 ./src/_write.o \
+./src/esp8266_uart.o \
 ./src/main.o \
 ./src/stm32f429i_discovery.o \
 ./src/stm32f429i_discovery_eeprom.o \
@@ -30,6 +32,7 @@ OBJS += \
 C_DEPS += \
 ./src/BlinkLed.d \
 ./src/_write.d \
+./src/esp8266_uart.d \
 ./src/main.d \
 ./src/stm32f429i_discovery.d \
 ./src/stm32f429i_discovery_eeprom.d \

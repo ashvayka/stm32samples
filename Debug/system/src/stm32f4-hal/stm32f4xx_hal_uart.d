@@ -1,14 +1,15 @@
-src/main.o: ../src/main.c ../system/include/diag/Trace.h \
- ../include/BlinkLed.h ../system/include/cmsis/stm32f4xx.h \
+system/src/stm32f4-hal/stm32f4xx_hal_uart.o: \
+ ../system/src/stm32f4-hal/stm32f4xx_hal_uart.c \
+ ../system/include/stm32f4-hal/stm32f4xx_hal.h \
+ ../include/stm32f4xx_hal_conf.h \
+ ../system/include/stm32f4-hal/stm32f4xx_hal_rcc.h \
+ ../system/include/stm32f4-hal/stm32f4xx_hal_def.h \
+ ../system/include/cmsis/stm32f4xx.h \
  ../system/include/cmsis/stm32f429xx.h ../system/include/cmsis/core_cm4.h \
  ../system/include/cmsis/core_cmInstr.h \
  ../system/include/cmsis/core_cmFunc.h \
  ../system/include/cmsis/core_cm4_simd.h \
  ../system/include/cmsis/system_stm32f4xx.h \
- ../system/include/stm32f4-hal/stm32f4xx_hal.h \
- ../include/stm32f4xx_hal_conf.h \
- ../system/include/stm32f4-hal/stm32f4xx_hal_rcc.h \
- ../system/include/stm32f4-hal/stm32f4xx_hal_def.h \
  ../system/include/stm32f4-hal/Legacy/stm32_hal_legacy.h \
  ../system/include/stm32f4-hal/stm32f4xx_hal_rcc_ex.h \
  ../system/include/stm32f4-hal/stm32f4xx_hal_gpio.h \
@@ -61,17 +62,15 @@ src/main.o: ../src/main.c ../system/include/diag/Trace.h \
  ../system/include/stm32f4-hal/stm32f4xx_hal_pcd.h \
  ../system/include/stm32f4-hal/stm32f4xx_ll_usb.h \
  ../system/include/stm32f4-hal/stm32f4xx_hal_pcd_ex.h \
- ../system/include/stm32f4-hal/stm32f4xx_hal_hcd.h \
- ../include/esp8266_uart.h ../include/stm32f429i_discovery.h \
- ../include/stm32f429i_discovery_lcd.h \
- ../include/stm32f429i_discovery_sdram.h \
- ../system/include/../../Fonts/fonts.h \
- ../include/../Components/ili9341/ili9341.h \
- ../include/../Components/ili9341/../Common/lcd.h
+ ../system/include/stm32f4-hal/stm32f4xx_hal_hcd.h
 
-../system/include/diag/Trace.h:
+../system/include/stm32f4-hal/stm32f4xx_hal.h:
 
-../include/BlinkLed.h:
+../include/stm32f4xx_hal_conf.h:
+
+../system/include/stm32f4-hal/stm32f4xx_hal_rcc.h:
+
+../system/include/stm32f4-hal/stm32f4xx_hal_def.h:
 
 ../system/include/cmsis/stm32f4xx.h:
 
@@ -86,14 +85,6 @@ src/main.o: ../src/main.c ../system/include/diag/Trace.h \
 ../system/include/cmsis/core_cm4_simd.h:
 
 ../system/include/cmsis/system_stm32f4xx.h:
-
-../system/include/stm32f4-hal/stm32f4xx_hal.h:
-
-../include/stm32f4xx_hal_conf.h:
-
-../system/include/stm32f4-hal/stm32f4xx_hal_rcc.h:
-
-../system/include/stm32f4-hal/stm32f4xx_hal_def.h:
 
 ../system/include/stm32f4-hal/Legacy/stm32_hal_legacy.h:
 
@@ -200,17 +191,3 @@ src/main.o: ../src/main.c ../system/include/diag/Trace.h \
 ../system/include/stm32f4-hal/stm32f4xx_hal_pcd_ex.h:
 
 ../system/include/stm32f4-hal/stm32f4xx_hal_hcd.h:
-
-../include/esp8266_uart.h:
-
-../include/stm32f429i_discovery.h:
-
-../include/stm32f429i_discovery_lcd.h:
-
-../include/stm32f429i_discovery_sdram.h:
-
-../system/include/../../Fonts/fonts.h:
-
-../include/../Components/ili9341/ili9341.h:
-
-../include/../Components/ili9341/../Common/lcd.h:
